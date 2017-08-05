@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/go-chat-bot/bot/irc"
+	"golang.org/x/crypto/ssh/terminal"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -31,6 +32,16 @@ func (c *Config) LoadFromFile(filename string) error {
 	}
 
 	log.Printf("Configuration loaded: %s\n", c)
+	if c.IRC.Password == "" {
+		fmt.Printf("Enter the nickserv password: ")
+		password, err := terminal.ReadPassword(0)
+		fmt.Println()
+		if err != nil {
+			return err
+		}
+
+		c.IRC.Password = string(password)
+	}
 
 	return nil
 }
