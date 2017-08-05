@@ -31,7 +31,10 @@ func (c *Config) LoadFromFile(filename string) error {
 		return err
 	}
 
-	log.Printf("Configuration loaded: %s\n", c)
+	if c.Debug {
+		log.Printf("Configuration loaded: %s\n", c)
+	}
+
 	if c.IRC.Password == "" {
 		fmt.Printf("Enter the nickserv password: ")
 		password, err := terminal.ReadPassword(0)
