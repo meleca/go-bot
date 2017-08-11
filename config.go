@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-chat-bot/bot/irc"
+	"github.com/meleca/bot/irc"
 	"golang.org/x/crypto/ssh/terminal"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
