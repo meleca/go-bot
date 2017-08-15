@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/meleca/bot/irc"
-	"golang.org/x/crypto/ssh/terminal"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
 	"log"
+
+	"golang.org/x/crypto/ssh/terminal"
+
+	"github.com/meleca/bot/irc"
+	"github.com/spf13/viper"
 )
 
 type Configuration interface {
@@ -21,12 +22,14 @@ type Config struct {
 }
 
 func (c *Config) LoadFromFile(filename string) error {
-	source, err := ioutil.ReadFile(filename)
+	viper.SetConfigType("yaml")
+	viper.SetConfigFile(filename)
+	err := viper.ReadInConfig()
 	if err != nil {
 		return err
 	}
 
-	err = yaml.Unmarshal(source, c)
+	err = viper.Unmarshal(&c)
 	if err != nil {
 		return err
 	}
