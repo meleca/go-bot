@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	"flag"
 
 	"github.com/meleca/bot/irc"
 	"github.com/meleca/bot/slack"
@@ -28,10 +28,14 @@ import (
 )
 
 func main() {
-	filename := os.Args[1]
-
+	var configFile string
 	var config Config
-	err := config.LoadFromFile(filename)
+
+	/* Configuration file parameter may be empty, because of that a default value is specified */
+	flag.StringVar(&configFile, "config", "config.yaml", "configuration file")
+	flag.Parse()
+
+	err := config.LoadFromFile(configFile)
 	if err != nil {
 		panic(err)
 	}
